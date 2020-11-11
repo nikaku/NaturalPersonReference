@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NaturalPersonReference.BL.Interfaces;
 using NaturalPersonReference.DB;
+using NaturalPersonReference.Factories;
 
 namespace NaturalPersonReference
 {
@@ -24,6 +25,8 @@ namespace NaturalPersonReference
         {
             services.AddControllersWithViews();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IPersonModelFactory, PersonModelFactory>();
+            services.AddScoped<ICityModelFactory, CityModelFactory>();
 
             IConfigurationSection appSettingsSection = Configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettingsSection);
