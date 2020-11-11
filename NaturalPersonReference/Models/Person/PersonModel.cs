@@ -3,6 +3,7 @@ using NaturalPersonReference.BL.Entities;
 using NaturalPersonReference.BL.Enums;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -20,10 +21,12 @@ namespace NaturalPersonReference.Models.Person
         public string LastName { get; set; }
         public Gender Gender { get; set; }
         public string Tin { get; set; }
+
+        [DataType(DataType.DateTime)]
         public DateTime BirthDate { get; set; }
         public CityModel City { get; set; }
         public IList<SelectListItem> Cities { get; set; }
-        public Phone PhoneNumber { get; set; }
+        public PhoneModel Phone { get; set; }
         public string PicturePath { get; set; }
     }
 }

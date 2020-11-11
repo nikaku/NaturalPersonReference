@@ -1,3 +1,4 @@
+using AutoMapper;
 using FamousQuoteQuiz.API;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -8,6 +9,8 @@ using Microsoft.Extensions.Hosting;
 using NaturalPersonReference.BL.Interfaces;
 using NaturalPersonReference.DB;
 using NaturalPersonReference.Factories;
+using NaturalPersonReference.MapperProfiles;
+using NaturalPersonReference.Services.Persons;
 
 namespace NaturalPersonReference
 {
@@ -27,6 +30,8 @@ namespace NaturalPersonReference
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IPersonModelFactory, PersonModelFactory>();
             services.AddScoped<ICityModelFactory, CityModelFactory>();
+            services.AddScoped<IPersonService, PersonService>();
+            services.AddAutoMapper(c => c.AddProfile<PersonProfile>(), typeof(Startup));
 
             IConfigurationSection appSettingsSection = Configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettingsSection);

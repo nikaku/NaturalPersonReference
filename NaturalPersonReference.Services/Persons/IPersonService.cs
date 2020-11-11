@@ -7,6 +7,6 @@ namespace NaturalPersonReference.Services.Persons
 {
     public interface IPersonService
     {
-        void CreateUser(Person person);
+        void CreatePerson(Person person);
     }
 }

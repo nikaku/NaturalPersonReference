@@ -1,0 +1,15 @@
+﻿@model PersonListModel
+@{
+    ViewBag.Title = "Index";
+}
+<div>
+    @foreach (var person in Model.Persons)
+    {
+        <p>
+            <strong>@person.FirstName | @person.LastName </strong>
+        </p>
+    }
+
+    <a class="btn btn-primary" asp-action="Create">Create</a>
+
+</div>

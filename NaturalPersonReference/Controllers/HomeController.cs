@@ -23,7 +23,6 @@ namespace NaturalPersonReference.Controllers
 
         public IActionResult Index()
         {
-            var xz = _unitOfWork.PersonRepository.Get(0);
             return View();
         }
 

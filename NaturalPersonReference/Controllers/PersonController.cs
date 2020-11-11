@@ -1,22 +1,36 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using NaturalPersonReference.BL.Entities;
 using NaturalPersonReference.Factories;
 using NaturalPersonReference.Models.Person;
+using NaturalPersonReference.Services.Persons;
 
 namespace NaturalPersonReference.Controllers
 {
     public class PersonController : Controller
     {
         private IPersonModelFactory _personModelFactory;
+        private IMapper _mapper;
+        private IPersonService _personService;
 
-        public PersonController(IPersonModelFactory personModelFactory)
+        public PersonController(IPersonModelFactory personModelFactory, IMapper mapper, IPersonService personService)
         {
             _personModelFactory = personModelFactory;
+            _mapper = mapper;
+            _personService = personService;
         }
         // GET: PersonController
         public ActionResult Index()
         {
             return View();
+        }
+
+        // GET: PersonController/List/
+        public ActionResult List()
+        {
+            var persons = _personModelFactory.PreparePersonListModel();
+            return View(persons);
         }
 
         // GET: PersonController/Details/5
@@ -36,16 +50,11 @@ namespace NaturalPersonReference.Controllers
         // POST: PersonController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(PersonModel model)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            var person = _mapper.Map<Person>(model);
+            _personService.CreatePerson(person);
+            return Json("1213");
         }
 
         // GET: PersonController/Edit/5

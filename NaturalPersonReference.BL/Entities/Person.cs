@@ -14,7 +14,7 @@ namespace NaturalPersonReference.BL.Entities
         public string Tin { get; set; }
         public DateTime BirthDate { get; set; }
         public City City { get; set; }
-        public Phone PhoneNumber { get; set; }
+        public Phone Phone { get; set; }
         public string PicturePath { get; set; }
         public virtual ICollection<RelatedPersons> RelatedTo { get; set; }
         public virtual ICollection<RelatedPersons> RelatedFrom { get; set; }

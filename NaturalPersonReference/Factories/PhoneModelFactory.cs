@@ -7,9 +7,10 @@ using System.Threading.Tasks;
 
 namespace NaturalPersonReference.Factories
 {
-    public interface IPersonModelFactory
+    public class PhoneModelFactory : IPhoneModelFactory
     {
-        void PreparePersonModel(PersonModel model, Person person);
-        PersonListModel PreparePersonListModel();
+        public void PreparePhoneModel(PhoneModel model, Phone phone)
+        {
+        }
     }
 }
