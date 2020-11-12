@@ -9,7 +9,7 @@ namespace NaturalPersonReference.Factories
 {
     public interface IPersonModelFactory
     {
-        void PreparePersonModel(PersonModel model, Person person);
+        PersonModel PreparePersonModel(Person person = null);
         PersonListModel PreparePersonListModel();
     }
 }

@@ -1,10 +1,6 @@
 ﻿using AutoMapper;
 using NaturalPersonReference.BL.Entities;
 using NaturalPersonReference.Models.Person;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace NaturalPersonReference.MapperProfiles
 {
@@ -13,6 +9,7 @@ namespace NaturalPersonReference.MapperProfiles
         public PhoneProfile()
         {
             CreateMap<PhoneModel, Phone>();
+            CreateMap<Phone, PhoneModel>().ForMember(des => des.SelectedType, opt => opt.MapFrom(src => src.Type));
         }
     }
 }

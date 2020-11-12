@@ -30,10 +30,23 @@ namespace NaturalPersonReference.Factories
             return listModel;
         }
 
-
-        public void PreparePersonModel(PersonModel model, Person person)
+        public PersonModel PreparePersonModel(Person person)
         {
+            PersonModel model = new PersonModel();
+
+            if (person != null)
+            {
+                model.FirstName = person.FirstName;
+                model.LastName = person.LastName;
+                model.Gender = person.Gender;
+                model.Tin = person.Tin;
+                model.BirthDate = person.BirthDate;
+                model.City = _mapper.Map<CityModel>(person.City);
+                model.Phone = _mapper.Map<PhoneModel>(person.Phone);
+            }
+
             model.Cities = _unitOfWork.CityRepository.GetAll().Select(c => new SelectListItem { Text = c.CityName, Value = c.Id.ToString() }).ToList();
+            return model;
         }
     }
 }

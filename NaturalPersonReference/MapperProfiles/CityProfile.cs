@@ -9,6 +9,7 @@ namespace NaturalPersonReference.MapperProfiles
         public CityProfile()
         {
             CreateMap<CityModel, City>();
+            CreateMap<City, CityModel>().ForMember(des => des.SelectedCityId, opt => opt.MapFrom(src => src.Id));
         }
     }
 }

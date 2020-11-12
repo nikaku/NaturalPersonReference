@@ -25,8 +25,10 @@ namespace NaturalPersonReference.Models.Person
         [DataType(DataType.DateTime)]
         public DateTime BirthDate { get; set; }
         public CityModel City { get; set; }
+        public int CityId { get; set; }
         public IList<SelectListItem> Cities { get; set; }
         public PhoneModel Phone { get; set; }
+        public int PhoneId { get; set; }
         public string PicturePath { get; set; }
     }
 }

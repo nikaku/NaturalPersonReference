@@ -17,5 +17,10 @@ namespace NaturalPersonReference.Services.Persons
             _unitOfwork.PersonRepository.Add(person);
             _unitOfwork.SaveChanges();
         }
+
+        public Person Get(int id)
+        {
+            return _unitOfwork.PersonRepository.Get(id);
+        }
     }
 }

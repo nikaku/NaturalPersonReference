@@ -3,13 +3,24 @@
     ViewBag.Title = "Index";
 }
 <div>
-    @foreach (var person in Model.Persons)
-    {
-        <p>
-            <strong>@person.FirstName | @person.LastName </strong>
-        </p>
-    }
-
+    <table id="memberlist">
+        <tbody>
+            @foreach (var person in Model.Persons)
+            {
+                <tr>
+                    <td>
+                        @person.FirstName
+                    </td>
+                    <td>
+                        @person.LastName
+                    </td>
+                    <td>
+                        <a class="btn btn-primary" asp-action="Details" asp-route-id="@person.Id">Edit</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
     <a class="btn btn-primary" asp-action="Create">Create</a>
 
 </div>

@@ -36,14 +36,19 @@ namespace NaturalPersonReference.Controllers
         // GET: PersonController/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            var person = _personService.Get(id);
+            if (person == null)
+                return RedirectToAction("List");
+
+            var model = _personModelFactory.PreparePersonModel(person);
+
+            return View(model);
         }
 
         // GET: PersonController/Create
         public ActionResult Create()
         {
-            PersonModel model = new PersonModel();
-            _personModelFactory.PreparePersonModel(model, null);
+            PersonModel model = _personModelFactory.PreparePersonModel();
             return View(model);
         }
 
