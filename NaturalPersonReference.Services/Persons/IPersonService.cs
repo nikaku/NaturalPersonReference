@@ -7,7 +7,9 @@ namespace NaturalPersonReference.Services.Persons
 {
     public interface IPersonService
     {
-        void CreatePerson(Person person);
+        Person CreatePerson(Person person);
+        void DeletePerson(int id);
+        void UpdatePerson(Person person);
         Person Get(int id);
     }
 }

@@ -17,10 +17,35 @@
                     <td>
                         <a class="btn btn-primary" asp-action="Details" asp-route-id="@person.Id">Edit</a>
                     </td>
+                    <td>
+                        <a id="delete_person" class="btn btn-primary" data-model-id="@person.Id">Delete</a>
+                    </td>
                 </tr>
             }
         </tbody>
     </table>
     <a class="btn btn-primary" asp-action="Create">Create</a>
-
 </div>
+
+<script>
+    function deletePerson(obj) {
+        var Id = obj.data("model-id");
+        console.log('/person/delete')
+        $.ajax({
+            url: '/person/delete/',
+            type: 'DELETE',
+            cache: false,
+            data: {
+                id: Id
+            },
+            success: function (result) {
+                obj.parents("tr").remove();
+            }
+        });
+    }
+    $(document).ready(function () {
+        $(document).on("click", "#delete_person", function () {
+            deletePerson($(this))
+        })
+    })
+</script>

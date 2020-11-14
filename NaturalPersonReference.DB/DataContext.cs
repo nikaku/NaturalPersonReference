@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NaturalPersonReference.BL.Entities;
+using NaturalPersonReference.DB.EntityConfigurations;
 
 namespace NaturalPersonReference.DB
 {
@@ -16,24 +17,7 @@ namespace NaturalPersonReference.DB
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<RelatedPersons>()
-             .HasKey(p => new { p.PersonId, p.RelatedPersonId });
-
-            modelBuilder.Entity<RelatedPersons>()
-               .HasOne(x => x.Person)
-               .WithMany(x => x.RelatedFrom)
-               .HasForeignKey(x => x.PersonId);
-
-            modelBuilder.Entity<RelatedPersons>()
-               .HasOne(x => x.RelatedPerson)
-               .WithMany(x => x.RelatedTo)
-               .HasForeignKey(x => x.RelatedPersonId);
-
-            modelBuilder.Entity<RelatedPersons>()
-               .HasOne(x => x.Person)
-               .WithMany()
-               .OnDelete(DeleteBehavior.NoAction);
-
+            modelBuilder.ApplyConfiguration(new RelatedPersonConfiguration());
         }
     }
 }

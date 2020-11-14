@@ -5,6 +5,7 @@ using NaturalPersonReference.BL.Entities;
 using NaturalPersonReference.Factories;
 using NaturalPersonReference.Models.Person;
 using NaturalPersonReference.Services.Persons;
+using System;
 
 namespace NaturalPersonReference.Controllers
 {
@@ -19,11 +20,6 @@ namespace NaturalPersonReference.Controllers
             _personModelFactory = personModelFactory;
             _mapper = mapper;
             _personService = personService;
-        }
-        // GET: PersonController
-        public ActionResult Index()
-        {
-            return View();
         }
 
         // GET: PersonController/List/
@@ -57,51 +53,34 @@ namespace NaturalPersonReference.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(PersonModel model)
         {
+            throw new Exception("test");
             var person = _mapper.Map<Person>(model);
-            _personService.CreatePerson(person);
-            return Json("1213");
+            var personAdded = _personService.CreatePerson(person);
+            var personModel = _personModelFactory.PreparePersonModel(personAdded);
+            return RedirectToAction("Details", new { model.Id });
         }
 
-        // GET: PersonController/Edit/5
-        public ActionResult Edit(int id)
+        [HttpPost]
+        public ActionResult Edit(PersonModel model)
+        {
+            var person = _mapper.Map<Person>(model);
+            _personService.UpdatePerson(person);
+
+            var personModel = _personModelFactory.PreparePersonModel(person);
+            return RedirectToAction("Details", new { model.Id });
+        }
+
+        [HttpGet]
+        public ActionResult Delete()
         {
             return View();
         }
 
-        // POST: PersonController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: PersonController/Delete/5
+        [HttpDelete]
         public ActionResult Delete(int id)
         {
-            return View();
-        }
-
-        // POST: PersonController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            _personService.DeletePerson(id);
+            return RedirectToAction(nameof(List));
         }
     }
 }

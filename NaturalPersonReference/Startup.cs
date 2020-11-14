@@ -1,5 +1,7 @@
 using AutoMapper;
 using FamousQuoteQuiz.API;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -10,7 +12,10 @@ using NaturalPersonReference.BL.Interfaces;
 using NaturalPersonReference.DB;
 using NaturalPersonReference.Factories;
 using NaturalPersonReference.MapperProfiles;
+using NaturalPersonReference.Middlewares;
+using NaturalPersonReference.Models.Person;
 using NaturalPersonReference.Services.Persons;
+using NaturalPersonReference.Validators;
 
 namespace NaturalPersonReference
 {
@@ -26,12 +31,13 @@ namespace NaturalPersonReference
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
+            services.AddControllersWithViews().AddFluentValidation();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IPersonModelFactory, PersonModelFactory>();
             services.AddScoped<ICityModelFactory, CityModelFactory>();
             services.AddScoped<IPersonService, PersonService>();
             services.AddAutoMapper(c => c.AddProfile<PersonProfile>(), typeof(Startup));
+            services.AddTransient<IValidator<PersonModel>, PersonValidator>();
 
             IConfigurationSection appSettingsSection = Configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettingsSection);
@@ -65,11 +71,13 @@ namespace NaturalPersonReference
 
             app.UseAuthorization();
 
+            app.UseMiddleware<ErrorLoggerMiddleware>();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=person}/{action=create}/{id?}");
             });
         }
     }

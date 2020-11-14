@@ -6,14 +6,17 @@
             <div class="form-group">
                 <label asp-for="FirstName" class="control-label"></label>
                 <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName"></span>
             </div>
             <div class="form-group">
                 <label asp-for="LastName" class="control-label"></label>
                 <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Tin" class="control-label"></label>
                 <input asp-for="Tin" class="form-control" />
+                <span asp-validation-for="Tin"></span>
             </div>
             <div class="inputs">
                 <label asp-for="City.CityName" asp-postfix=":"></label>
@@ -34,10 +37,12 @@
             <div class="form-group">
                 <label asp-for="Phone.PhoneNumber" class="control-label"></label>
                 <input asp-for="Phone.PhoneNumber" class="form-control" />
+                <span asp-validation-for="Phone.PhoneNumber"></span>
             </div>
             <div class="form-group">
                 <label asp-for="BirthDate" class="control-label"></label>
                 <input asp-for="BirthDate" class="form-control" />
+                <span asp-validation-for="BirthDate"></span>
             </div>
 
             <div class="form-group">

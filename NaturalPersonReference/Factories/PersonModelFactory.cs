@@ -43,6 +43,8 @@ namespace NaturalPersonReference.Factories
                 model.BirthDate = person.BirthDate;
                 model.City = _mapper.Map<CityModel>(person.City);
                 model.Phone = _mapper.Map<PhoneModel>(person.Phone);
+                model.PhoneId = person.PhoneId;
+                model.CityId = person.CityId;
             }
 
             model.Cities = _unitOfWork.CityRepository.GetAll().Select(c => new SelectListItem { Text = c.CityName, Value = c.Id.ToString() }).ToList();

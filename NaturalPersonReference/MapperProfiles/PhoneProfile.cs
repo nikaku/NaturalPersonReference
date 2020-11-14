@@ -8,7 +8,7 @@ namespace NaturalPersonReference.MapperProfiles
     {
         public PhoneProfile()
         {
-            CreateMap<PhoneModel, Phone>();
+            CreateMap<PhoneModel, Phone>().ForMember(des=>des.Type, opt=>opt.MapFrom(src=>src.SelectedType));
             CreateMap<Phone, PhoneModel>().ForMember(des => des.SelectedType, opt => opt.MapFrom(src => src.Type));
         }
     }
