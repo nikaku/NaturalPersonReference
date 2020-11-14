@@ -8,7 +8,7 @@ namespace NaturalPersonReference.Middlewares
     public class ErrorLoggerMiddleware
     {
         private readonly RequestDelegate _next;
-        private readonly ILogger _logger = LogManager.GetLogger("middleloggerrule");
+        private Logger _logger = NLog.Web.NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
 
         public ErrorLoggerMiddleware(RequestDelegate next)
         {
