@@ -9,19 +9,23 @@ namespace NaturalPersonReference.Services.localization
     public class LocalizationService : ILocalizationService
     {
         private IUnitOfWork _unitOfwork;
-        public LocalizationService(IUnitOfWork unitOfWork)
+        private readonly IWorkContext _workContext;
+
+        public LocalizationService(IUnitOfWork unitOfWork, IWorkContext workContext)
         {
             _unitOfwork = unitOfWork;
+            _workContext = workContext;
         }
-        public string GetResource(string resourceName, int languageId)
+        public string GetResource(string resourceName)
         {
-            var resource = _unitOfwork.LocaleResourceRepository.Find(x => x.ResourceName == resourceName && x.LanguageId == languageId);
+            var resource = _unitOfwork.LocaleResourceRepository.Find(x => x.ResourceName == resourceName && x.LanguageId == _workContext.LanguangeId);
             return resource == null ? resourceName : resource.ResourceValue;
         }
 
         public void InsertLocaleStringResource(LocaleResource localeResource)
         {
-            throw new NotImplementedException();
+            _unitOfwork.LocaleResourceRepository.Add(localeResource);
+            _unitOfwork.SaveChanges();
         }
     }
 }

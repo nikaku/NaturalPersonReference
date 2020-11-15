@@ -18,7 +18,6 @@ namespace NaturalPersonReference.BL.Entities
         public Phone Phone { get; set; }
         public int PhoneId { get; set; }
         public string PicturePath { get; set; }
-        public virtual ICollection<RelatedPersons> RelatedTo { get; set; }
-        public virtual ICollection<RelatedPersons> RelatedFrom { get; set; }
+        public virtual ICollection<RelatedPersons> RelatedPersons { get; set; }
     }
 }

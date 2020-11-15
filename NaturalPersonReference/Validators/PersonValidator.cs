@@ -12,10 +12,10 @@ namespace NaturalPersonReference.Validators
     {
         public PersonValidator(ILocalizationService localizationService)
         {
-            RuleFor(p => p.FirstName).NotEmpty().MinimumLength(2).MaximumLength(50).Matches(@"(^[\u10A0-\u10FF]+$)|(^[A-Za-z]+$)").WithMessage(localizationService.GetResource("FirstName.Error", 1));
-            RuleFor(p => p.LastName).NotEmpty().MinimumLength(2).MaximumLength(50).Matches(@"^(^[\u10A0-\u10FF]+$)|(^[A-Za-z]+$)").WithMessage(localizationService.GetResource("LastName.Error", 1));
-            RuleFor(p => p.Tin).Length(11).WithMessage(localizationService.GetResource("Tin.Error", 1));
-            RuleFor(p => p.BirthDate).LessThan(x => DateTime.Now.AddYears(-18)).WithMessage(localizationService.GetResource("LastName.BirthDate", 1));
+            RuleFor(p => p.FirstName).NotEmpty().MinimumLength(2).MaximumLength(50).Matches(@"(^[\u10A0-\u10FF]+$)|(^[A-Za-z]+$)").WithMessage(localizationService.GetResource("FirstName.Error"));
+            RuleFor(p => p.LastName).NotEmpty().MinimumLength(2).MaximumLength(50).Matches(@"^(^[\u10A0-\u10FF]+$)|(^[A-Za-z]+$)").WithMessage(localizationService.GetResource("LastName.Error"));
+            RuleFor(p => p.Tin).Length(11).WithMessage(localizationService.GetResource("Tin.Error"));
+            RuleFor(p => p.BirthDate).LessThan(x => DateTime.Now.AddYears(-18)).WithMessage(localizationService.GetResource("LastName.BirthDate"));
         }
     }
 }

@@ -1,11 +1,10 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NaturalPersonReference.BL.Entities;
 using NaturalPersonReference.Factories;
+using NaturalPersonReference.Models.Paging;
 using NaturalPersonReference.Models.Person;
 using NaturalPersonReference.Services.Persons;
-using System;
 
 namespace NaturalPersonReference.Controllers
 {
@@ -22,10 +21,11 @@ namespace NaturalPersonReference.Controllers
             _personService = personService;
         }
 
-        // GET: PersonController/List/
-        public ActionResult List()
+        // GET: PersonController/List/n
+        public ActionResult List(int pageNumber, string searchString)
         {
-            var persons = _personModelFactory.PreparePersonListModel();
+            ViewData["CurrentFilter"] = searchString;
+            var persons = _personModelFactory.PreparePersonListModel(pageNumber, searchString);           
             return View(persons);
         }
 
@@ -55,8 +55,7 @@ namespace NaturalPersonReference.Controllers
         {
             var person = _mapper.Map<Person>(model);
             var personAdded = _personService.CreatePerson(person);
-            var personModel = _personModelFactory.PreparePersonModel(personAdded);
-            return RedirectToAction("Details", new { model.Id });
+            return RedirectToAction(nameof(Details), new { model.Id });
         }
 
         [HttpPost]
@@ -66,7 +65,7 @@ namespace NaturalPersonReference.Controllers
             _personService.UpdatePerson(person);
 
             var personModel = _personModelFactory.PreparePersonModel(person);
-            return RedirectToAction("Details", new { model.Id });
+            return RedirectToAction(nameof(Details), new { model.Id });
         }
 
         [HttpGet]

@@ -8,6 +8,7 @@
         public string SqlServerUser { get; set; }
         public string SqlServerPassword { get; set; }
         public bool EnableSSL { get; set; }
+        public int LanguageId { get; set; }
 
     }
 }

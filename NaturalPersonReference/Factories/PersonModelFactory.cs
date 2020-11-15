@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using NaturalPersonReference.BL.Entities;
 using NaturalPersonReference.BL.Interfaces;
 using NaturalPersonReference.BL.Interfaces.Repositories;
+using NaturalPersonReference.Models.Paging;
 using NaturalPersonReference.Models.Person;
 using System;
 using System.Collections.Generic;
@@ -22,11 +23,14 @@ namespace NaturalPersonReference.Factories
             _mapper = mapper;
         }
 
-        public PersonListModel PreparePersonListModel()
+        public PersonListModel PreparePersonListModel(int pageNumber, string searchString)
         {
             var listModel = new PersonListModel();
-            var persons = _unitOfWork.PersonRepository.GetAll().ToList();
-            listModel.Persons = _mapper.Map<IList<PersonModel>>(persons);
+            var persons = _mapper.Map<IList<PersonModel>>(_unitOfWork.PersonRepository.FindAll(
+                x =>
+                (x.FirstName.Contains(searchString)) || (string.IsNullOrWhiteSpace(searchString))
+            ));
+            listModel.Persons = PaginatedList<PersonModel>.CreateAsync(persons, pageNumber, 5).Result; //TODO Move PageSize To Conig        
             return listModel;
         }
 
@@ -48,7 +52,8 @@ namespace NaturalPersonReference.Factories
             }
 
             model.Cities = _unitOfWork.CityRepository.GetAll().Select(c => new SelectListItem { Text = c.CityName, Value = c.Id.ToString() }).ToList();
-            model.Persons = _unitOfWork.PersonRepository.GetAll().Select(c => new SelectListItem { Text = $"{ c.FirstName} {c.LastName} ", Value = c.Id.ToString() }).ToList();
+
+            model.RelatedPersons = _unitOfWork.PersonRepository.GetAll().Select(c => new SelectListItem { Text = $"{ c.FirstName} {c.LastName} ", Value = c.Id.ToString() }).ToList();
 
             return model;
         }

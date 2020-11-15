@@ -1,13 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using NaturalPersonReference.Models.Paging;
+using System;
+using System.Collections.Generic;
 
 namespace NaturalPersonReference.Models.Person
 {
     public class PersonListModel
     {
-        public PersonListModel()
-        {
-            Persons = new List<PersonModel>();
-        }
-        public IEnumerable<PersonModel> Persons { get; set; }
+        public PaginatedList<PersonModel> Persons { get; set; }
     }
 }

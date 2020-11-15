@@ -4,7 +4,7 @@ namespace NaturalPersonReference.Services.localization
 {
     public interface ILocalizationService
     {
-        string GetResource(string resourceName, int languageId);
+        string GetResource(string resourceName);
         void InsertLocaleStringResource(LocaleResource localeResource);
     }
 }

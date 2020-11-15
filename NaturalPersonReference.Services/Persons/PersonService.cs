@@ -1,6 +1,8 @@
 ﻿using NaturalPersonReference.BL.Entities;
 using NaturalPersonReference.BL.Interfaces;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace NaturalPersonReference.Services.Persons
 {
@@ -32,6 +34,11 @@ namespace NaturalPersonReference.Services.Persons
         public Person Get(int id)
         {
             return _unitOfwork.PersonRepository.Get(id);
+        }
+
+        public IEnumerable<Person> GetAll()
+        {
+            return _unitOfwork.PersonRepository.GetAll();
         }
 
         public void UpdatePerson(Person person)

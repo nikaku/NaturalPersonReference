@@ -14,12 +14,8 @@ namespace NaturalPersonReference.DB.EntityConfigurations
             builder.HasKey(p => new { p.PersonId, p.RelatedPersonId });
 
             builder.HasOne(x => x.Person)
-               .WithMany(x => x.RelatedFrom)
+               .WithMany(x => x.RelatedPersons)
                .HasForeignKey(x => x.PersonId);
-
-            builder.HasOne(x => x.RelatedPerson)
-               .WithMany(x => x.RelatedTo)
-               .HasForeignKey(x => x.RelatedPersonId);
 
             builder.HasOne(x => x.Person)
                .WithMany()

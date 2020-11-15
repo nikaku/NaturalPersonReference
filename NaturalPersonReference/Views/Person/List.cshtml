@@ -1,7 +1,18 @@
 ﻿@model PersonListModel
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "List";
 }
+
+<form asp-action="List" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Find by name: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
+            <input type="submit" value="Search" class="btn btn-default" /> |
+            <a asp-action="List">Back to Full List</a>
+        </p>
+    </div>
+</form>
+
 <div>
     <table id="memberlist">
         <tbody>
@@ -26,6 +37,27 @@
     </table>
     <a class="btn btn-primary" asp-action="Create">Create</a>
 </div>
+
+
+@{
+    var prevDisabled = !Model.Persons.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.Persons.HasNextPage ? "disabled" : "";
+}
+
+<a asp-action="List"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.Persons.PageIndex - 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-default @prevDisabled">
+    Previous
+</a>
+<a asp-action="List"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.Persons.PageIndex + 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-default @nextDisabled">
+    Next
+</a>
 
 <script>
     function deletePerson(obj) {

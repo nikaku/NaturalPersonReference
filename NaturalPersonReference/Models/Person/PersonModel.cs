@@ -27,9 +27,8 @@ namespace NaturalPersonReference.Models.Person
         public CityModel City { get; set; }
         public int CityId { get; set; }
         public IList<SelectListItem> Cities { get; set; }
-        public IList<SelectListItem> Persons { get; set; }
-        public int RelatedPersnId { get; set; }
-        public PersonModel RelatedPersn { get; set; }
+        public IList<SelectListItem> RelatedPersons { get; set; }
+        public IList<int> SelectedPersons { get; set; }
         public ConnectionType ConnectionType { get; set; }
         public PhoneModel Phone { get; set; }
         public int PhoneId { get; set; }

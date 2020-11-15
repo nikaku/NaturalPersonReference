@@ -12,7 +12,15 @@ namespace NaturalPersonReference.MapperProfiles
     {
         public PersonProfile()
         {
-            CreateMap<PersonModel, Person>();
+            CreateMap<PersonModel, Person>()
+                .ForMember(des => des.RelatedPersons, opts => opts
+                  .MapFrom(src => src.SelectedPersons.Select(id =>
+                   new RelatedPersons
+                   {
+                       PersonId = id,
+                       ConnectionType = src.ConnectionType
+                   }
+                      )));
             CreateMap<Person, PersonModel>();
         }
     }

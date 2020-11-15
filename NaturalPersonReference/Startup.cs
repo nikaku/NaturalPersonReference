@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NaturalPersonReference.BL.Interfaces;
 using NaturalPersonReference.DB;
+using NaturalPersonReference.DB.Implementations;
 using NaturalPersonReference.Factories;
 using NaturalPersonReference.MapperProfiles;
 using NaturalPersonReference.Middlewares;
@@ -37,14 +38,16 @@ namespace NaturalPersonReference
             services.AddScoped<IPersonModelFactory, PersonModelFactory>();
             services.AddScoped<ICityModelFactory, CityModelFactory>();
             services.AddScoped<IPersonService, PersonService>();
-            services.AddScoped<ILocalizationService, LocalizationService>();
             services.AddAutoMapper(c => c.AddProfile<PersonProfile>(), typeof(Startup));
             services.AddTransient<IValidator<PersonModel>, PersonValidator>();
             services.AddTransient<IValidator<PhoneModel>, PhoneValidator>();
+            services.AddScoped<ILocalizationService, LocalizationService>();
 
             IConfigurationSection appSettingsSection = Configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettingsSection);
             AppSettings appSettings = appSettingsSection.Get<AppSettings>();
+
+            services.AddSingleton<IWorkContext>(wk=> new WorkContext { LanguangeId = appSettings.LanguageId});
 
             var connection = $"Server=tcp:{appSettings.SqlServerHostName},{appSettings.SqlServerPost};Initial Catalog={appSettings.SqlServerCatalog};Persist Security Info=False;User ID={appSettings.SqlServerUser};Password={appSettings.SqlServerPassword};MultipleActiveResultSets=False;Encrypt=False;TrustServerCertificate=False;Connection Timeout=30;";
 

@@ -11,5 +11,6 @@ namespace NaturalPersonReference.Services.Persons
         void DeletePerson(int id);
         void UpdatePerson(Person person);
         Person Get(int id);
+        IEnumerable<Person> GetAll();
     }
 }
