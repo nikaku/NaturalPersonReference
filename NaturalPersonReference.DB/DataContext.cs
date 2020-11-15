@@ -14,6 +14,8 @@ namespace NaturalPersonReference.DB
         public DbSet<Person> Persons { get; set; }
         public DbSet<Phone> Phones { get; set; }
         public DbSet<City> Cities { get; set; }
+        public DbSet<Language> Languages { get; set; }
+        public DbSet<LocaleResource> LocaleResources { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

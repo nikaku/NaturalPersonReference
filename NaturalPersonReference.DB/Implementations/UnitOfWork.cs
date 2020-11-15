@@ -14,13 +14,15 @@ namespace NaturalPersonReference.DB
             PersonRepository = new PersonRepository(dataContext);
             CityRepository = new CityRepository(dataContext);
             PhoneRepository = new PhoneRepository(dataContext);
+            LanguageRepository = new LanuageRepository(dataContext);
+            LocaleResourceRepository = new LocaleResourceRepository(dataContext);
         }
 
         public IPersonRepository PersonRepository { get; }
-
         public ICityRepository CityRepository { get; }
-
         public IPhoneRepository PhoneRepository { get; }
+        public ILocaleResourceRepository LocaleResourceRepository { get; }
+        public ILanguageRepository LanguageRepository { get; }
 
         public void Dispose()
         {

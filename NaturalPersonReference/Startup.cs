@@ -14,6 +14,7 @@ using NaturalPersonReference.Factories;
 using NaturalPersonReference.MapperProfiles;
 using NaturalPersonReference.Middlewares;
 using NaturalPersonReference.Models.Person;
+using NaturalPersonReference.Services.localization;
 using NaturalPersonReference.Services.Persons;
 using NaturalPersonReference.Validators;
 
@@ -36,8 +37,10 @@ namespace NaturalPersonReference
             services.AddScoped<IPersonModelFactory, PersonModelFactory>();
             services.AddScoped<ICityModelFactory, CityModelFactory>();
             services.AddScoped<IPersonService, PersonService>();
+            services.AddScoped<ILocalizationService, LocalizationService>();
             services.AddAutoMapper(c => c.AddProfile<PersonProfile>(), typeof(Startup));
             services.AddTransient<IValidator<PersonModel>, PersonValidator>();
+            services.AddTransient<IValidator<PhoneModel>, PhoneValidator>();
 
             IConfigurationSection appSettingsSection = Configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettingsSection);

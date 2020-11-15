@@ -53,7 +53,6 @@ namespace NaturalPersonReference.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(PersonModel model)
         {
-            throw new Exception("test");
             var person = _mapper.Map<Person>(model);
             var personAdded = _personService.CreatePerson(person);
             var personModel = _personModelFactory.PreparePersonModel(personAdded);

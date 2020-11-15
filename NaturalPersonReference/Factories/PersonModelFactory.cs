@@ -48,6 +48,8 @@ namespace NaturalPersonReference.Factories
             }
 
             model.Cities = _unitOfWork.CityRepository.GetAll().Select(c => new SelectListItem { Text = c.CityName, Value = c.Id.ToString() }).ToList();
+            model.Persons = _unitOfWork.PersonRepository.GetAll().Select(c => new SelectListItem { Text = $"{ c.FirstName} {c.LastName} ", Value = c.Id.ToString() }).ToList();
+
             return model;
         }
     }

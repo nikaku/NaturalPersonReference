@@ -7,6 +7,8 @@ namespace NaturalPersonReference.BL.Interfaces
         IPersonRepository PersonRepository { get; }
         ICityRepository CityRepository { get; }
         IPhoneRepository PhoneRepository { get; }
+        ILanguageRepository LanguageRepository { get; }
+        ILocaleResourceRepository LocaleResourceRepository { get; }
 
         void SaveChanges();
         void Dispose();

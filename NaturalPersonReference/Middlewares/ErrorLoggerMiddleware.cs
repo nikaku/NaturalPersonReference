@@ -8,6 +8,7 @@ namespace NaturalPersonReference.Middlewares
     public class ErrorLoggerMiddleware
     {
         private readonly RequestDelegate _next;
+        //TODO add as singletone
         private Logger _logger = NLog.Web.NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
 
         public ErrorLoggerMiddleware(RequestDelegate next)
@@ -25,6 +26,6 @@ namespace NaturalPersonReference.Middlewares
             {
                 _logger.Log(LogLevel.Error, error.Message);
             }
-        }
+        }        
     }
 }
