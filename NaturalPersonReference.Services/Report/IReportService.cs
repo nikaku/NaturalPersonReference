@@ -5,6 +5,6 @@ namespace NaturalPersonReference.Services.Report
 {
     public interface IReportService
     {
-        IEnumerable<PersonConnections> GerRelatedPersonsByConnectionType();
+        IEnumerable<PersonConnections> GetRelatedPersonsByConnectionType();
     }
 }

@@ -1,12 +1,15 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using NaturalPersonReference.ActionFilters;
 using NaturalPersonReference.BL.Entities;
 using NaturalPersonReference.Factories;
 using NaturalPersonReference.Models.Person;
 using NaturalPersonReference.Services.Persons;
+using System.Linq;
 
 namespace NaturalPersonReference.Controllers
 {
+    [PersonActionFilter]
     public class PersonController : Controller
     {
         private IPersonModelFactory _personModelFactory;
@@ -65,9 +68,10 @@ namespace NaturalPersonReference.Controllers
         {
             _pictureModelFactory.PreparePictureModel(model.Picture);
             var person = _mapper.Map<Person>(model);
-            _personService.UpdatePerson(person);
 
+            _personService.UpdatePerson(person);
             var personModel = _personModelFactory.PreparePersonModel(person);
+
             return RedirectToAction(nameof(Details), new { model.Id });
         }
 

@@ -18,7 +18,7 @@ namespace NaturalPersonReference.Services.Report
             _unitOfwork = unitOfWork;
         }
 
-        public IEnumerable<PersonConnections> GerRelatedPersonsByConnectionType()
+        public IEnumerable<PersonConnections> GetRelatedPersonsByConnectionType()
         {
             IList<PersonConnections> personConnections = new List<PersonConnections>();
             var persons = _unitOfwork.PersonRepository.GetPersonsWithConections();

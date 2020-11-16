@@ -12,16 +12,21 @@ namespace NaturalPersonReference.Factories
         {
             _webHostEnvironment = webHostEnvironment;
         }
-        public async void PreparePictureModel(PictureModel model)
+        public void PreparePictureModel(PictureModel model)
         {
+            if (model.PictureFile == null)
+            {
+                return;
+            }
             string wwwRootPath = _webHostEnvironment.WebRootPath;
             string fileName = Path.GetFileNameWithoutExtension(model.PictureFile.FileName);
             string extension = Path.GetExtension(model.PictureFile.FileName);
             model.Name = fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
-            model.PicurePath = Path.Combine(wwwRootPath + "\\Image\\", fileName);
-            using (var fileStream = new FileStream(model.PicurePath, FileMode.Create))
+            string absolute = Path.Combine(wwwRootPath + "\\Image\\", fileName);
+            model.PicurePath = Path.Combine("\\Image\\", fileName);
+            using (var fileStream = new FileStream(absolute, FileMode.Create))
             {
-                await model.PictureFile.CopyToAsync(fileStream);
+                model.PictureFile.CopyTo(fileStream);
             }
         }
     }

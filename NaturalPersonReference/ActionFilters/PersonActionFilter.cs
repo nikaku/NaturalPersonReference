@@ -1,21 +1,20 @@
-﻿using Microsoft.AspNetCore.Mvc.Filters;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace NaturalPersonReference.ActionFilters
 {
-    public class PersonActionFilter : IActionFilter
+    public class PersonActionFilter : ActionFilterAttribute
     {
-        public void OnActionExecuting(ActionExecutingContext context)
+        public override void OnActionExecuting(ActionExecutingContext context)
         {
-            // Do something before the action executes.
-        }
-
-        public void OnActionExecuted(ActionExecutedContext context)
-        {
-            // Do something after the action executes.            
+            if (!context.ModelState.IsValid)
+            {
+                context.Result = new BadRequestObjectResult(context.ModelState);
+            }
+            else
+            {
+                base.OnActionExecuting(context);
+            }
         }
     }
 

@@ -9,7 +9,11 @@
 <table class="table">
     <thead>
         <tr>
-            <th></th>
+            <th>Full Name</th>
+            @foreach (var item in Model.First().Connections)
+            {
+                <th>@item.Key</th>
+            }
         </tr>
     </thead>
     <tbody>
@@ -17,12 +21,12 @@
         {
             <tr>
                 <td>
-                    @item.person.FirstName - @item.person.LastName
+                    <a asp-controller="Person" asp-action="Details" asp-route-id="@item.person.Id"> @item.person.FirstName - @item.person.LastName</a>
                 </td>
                 @foreach (var connection in item.Connections)
                 {
                     <td>
-                        @connection.Key - @connection.Value
+                        @connection.Value
                     </td>
                 }
 

@@ -16,7 +16,7 @@ namespace NaturalPersonReference.Controllers
         }
         public ActionResult Connections()
         {
-            var report = _reportService.GerRelatedPersonsByConnectionType();
+            var report = _reportService.GetRelatedPersonsByConnectionType();
             return View(report);
         }
     }

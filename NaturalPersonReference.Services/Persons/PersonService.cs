@@ -24,7 +24,7 @@ namespace NaturalPersonReference.Services.Persons
         public void DeletePerson(int id)
         {
             var prerson = _unitOfwork.PersonRepository.Get(id);
-            var relatedTo = _unitOfwork.RelatedPersonsRepository.FindAll(x => x.PersonId == id || x.RelatedPersonId == id);             
+            var relatedTo = _unitOfwork.RelatedPersonsRepository.FindAll(x => x.PersonId == id || x.RelatedPersonId == id);
             if (prerson != null)
             {
                 foreach (var relatedPerson in relatedTo)
@@ -59,11 +59,6 @@ namespace NaturalPersonReference.Services.Persons
             return _unitOfwork.PersonRepository.GetAll();
         }
 
-        public IEnumerable<Person> GetAllWithConnections()
-        {
-            return _unitOfwork.PersonRepository.GetAll();
-        }
-
         public void UpdatePerson(Person person)
         {
             var personInDb = _unitOfwork.PersonRepository.Get(person.Id);
@@ -89,7 +84,7 @@ namespace NaturalPersonReference.Services.Persons
             personInDb.Tin = person.Tin;
             personInDb.PhoneId = person.PhoneId;
             personInDb.CityId = person.CityId;
-            personInDb.PicturePath = person.PicturePath;
+            personInDb.PicturePath = person.PicturePath == null ? personInDb.PicturePath : person.PicturePath;
 
             _unitOfwork.PersonRepository.Update(personInDb);
             _unitOfwork.SaveChanges();

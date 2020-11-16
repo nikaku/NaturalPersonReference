@@ -87,7 +87,7 @@ namespace NaturalPersonReference
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=person}/{action=list}/{id?}");
+                    pattern: "{controller=Report}/{action=Connections}/{id?}");
             });
         }
     }
