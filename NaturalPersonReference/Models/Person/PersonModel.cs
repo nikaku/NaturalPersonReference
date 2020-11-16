@@ -15,6 +15,7 @@ namespace NaturalPersonReference.Models.Person
         public PersonModel()
         {
             Cities = new List<SelectListItem>();
+            Picture = new PictureModel();
         }
 
         public int Id { get; set; }

@@ -63,6 +63,7 @@ namespace NaturalPersonReference.Controllers
         [HttpPost]
         public ActionResult Edit(PersonModel model)
         {
+            _pictureModelFactory.PreparePictureModel(model.Picture);
             var person = _mapper.Map<Person>(model);
             _personService.UpdatePerson(person);
 

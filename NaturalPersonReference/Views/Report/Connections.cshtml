@@ -1,0 +1,32 @@
+﻿@model IEnumerable<PersonConnections>
+
+@{
+    ViewData["Title"] = "View";
+}
+
+<h1>Connections Report</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.person.FirstName - @item.person.LastName
+                </td>
+                @foreach (var connection in item.Connections)
+                {
+                    <td>
+                        @connection.Key - @connection.Value
+                    </td>
+                }
+
+            </tr>
+        }
+    </tbody>
+</table>

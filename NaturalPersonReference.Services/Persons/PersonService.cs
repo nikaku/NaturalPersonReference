@@ -58,6 +58,11 @@ namespace NaturalPersonReference.Services.Persons
             return _unitOfwork.PersonRepository.GetAll();
         }
 
+        public IEnumerable<Person> GetAllWithConnections()
+        {
+            return _unitOfwork.PersonRepository.GetAll();
+        }
+
         public void UpdatePerson(Person person)
         {
             var personInDb = _unitOfwork.PersonRepository.Get(person.Id);
@@ -83,6 +88,7 @@ namespace NaturalPersonReference.Services.Persons
             personInDb.Tin = person.Tin;
             personInDb.PhoneId = person.PhoneId;
             personInDb.CityId = person.CityId;
+            personInDb.PicturePath = person.PicturePath;
 
             _unitOfwork.PersonRepository.Update(personInDb);
             _unitOfwork.SaveChanges();

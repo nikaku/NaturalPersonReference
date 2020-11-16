@@ -18,7 +18,7 @@ namespace NaturalPersonReference.Factories
             string fileName = Path.GetFileNameWithoutExtension(model.PictureFile.FileName);
             string extension = Path.GetExtension(model.PictureFile.FileName);
             model.Name = fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
-            model.PicurePath = Path.Combine(wwwRootPath + "/Image/", fileName);
+            model.PicurePath = Path.Combine(wwwRootPath + "\\Image\\", fileName);
             using (var fileStream = new FileStream(model.PicurePath, FileMode.Create))
             {
                 await model.PictureFile.CopyToAsync(fileStream);

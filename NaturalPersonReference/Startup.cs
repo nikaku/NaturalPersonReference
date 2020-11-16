@@ -18,6 +18,7 @@ using NaturalPersonReference.Middlewares;
 using NaturalPersonReference.Models.Person;
 using NaturalPersonReference.Services.localization;
 using NaturalPersonReference.Services.Persons;
+using NaturalPersonReference.Services.Report;
 using NaturalPersonReference.Validators;
 
 namespace NaturalPersonReference
@@ -44,6 +45,7 @@ namespace NaturalPersonReference
             services.AddTransient<IValidator<PhoneModel>, PhoneValidator>();
             services.AddScoped<ILocalizationService, LocalizationService>();
             services.AddScoped<IPictureModelFactory, PictureModelFactory>();
+            services.AddScoped<IReportService, ReportService>();
 
             IConfigurationSection appSettingsSection = Configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettingsSection);
@@ -85,7 +87,7 @@ namespace NaturalPersonReference
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=person}/{action=create}/{id?}");
+                    pattern: "{controller=person}/{action=list}/{id?}");
             });
         }
     }

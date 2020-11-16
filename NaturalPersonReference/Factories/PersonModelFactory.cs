@@ -7,6 +7,7 @@ using NaturalPersonReference.Models.Paging;
 using NaturalPersonReference.Models.Person;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -28,9 +29,13 @@ namespace NaturalPersonReference.Factories
             var listModel = new PersonListModel();
             var persons = _mapper.Map<IList<PersonModel>>(_unitOfWork.PersonRepository.FindAll(
                 x =>
-                (x.FirstName.Contains(searchString)) || (string.IsNullOrWhiteSpace(searchString))
+                (
+                x.FirstName.Contains(searchString)) || (string.IsNullOrWhiteSpace(searchString) ||
+                x.LastName.Contains(searchString)) || (string.IsNullOrWhiteSpace(searchString) ||
+                x.Tin.Contains(searchString)) || (string.IsNullOrWhiteSpace(searchString)
+                )
             ));
-            listModel.Persons = PaginatedList<PersonModel>.CreateAsync(persons, pageNumber, 5).Result; //TODO Move PageSize To Conig        
+            listModel.Persons = PaginatedList<PersonModel>.CreateAsync(persons, pageNumber, 5).Result; //TODO Move PageSize To Config        
             return listModel;
         }
 
@@ -49,6 +54,8 @@ namespace NaturalPersonReference.Factories
                 model.Phone = _mapper.Map<PhoneModel>(person.Phone);
                 model.PhoneId = person.PhoneId;
                 model.CityId = person.CityId;
+                model.Picture.PicurePath = person.PicturePath;
+                model.Picture.Name = Path.GetFileName(person.PicturePath);
             }
 
             model.Cities = _unitOfWork.CityRepository.GetAll().Select(c => new SelectListItem { Text = c.CityName, Value = c.Id.ToString() }).ToList();
