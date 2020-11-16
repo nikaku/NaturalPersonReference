@@ -1,9 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using NaturalPersonReference.BL.Entities;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace NaturalPersonReference.DB.EntityConfigurations
 {
@@ -15,11 +12,11 @@ namespace NaturalPersonReference.DB.EntityConfigurations
 
             builder.HasOne(x => x.Person)
                .WithMany(x => x.RelatedPersons)
-               .HasForeignKey(x => x.PersonId);
+               .HasForeignKey(x => x.PersonId).OnDelete(DeleteBehavior.NoAction);
 
-            builder.HasOne(x => x.Person)
-               .WithMany()
-               .OnDelete(DeleteBehavior.NoAction);
+            builder.HasOne(x => x.RelatedPerson)
+               .WithMany(x => x.RelatedPersonsFrom)
+               .HasForeignKey(x => x.RelatedPersonId).OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

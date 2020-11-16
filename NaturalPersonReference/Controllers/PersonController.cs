@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using NaturalPersonReference.BL.Entities;
 using NaturalPersonReference.Factories;
-using NaturalPersonReference.Models.Paging;
 using NaturalPersonReference.Models.Person;
 using NaturalPersonReference.Services.Persons;
 
@@ -11,21 +10,23 @@ namespace NaturalPersonReference.Controllers
     public class PersonController : Controller
     {
         private IPersonModelFactory _personModelFactory;
+        private IPictureModelFactory _pictureModelFactory;
         private IMapper _mapper;
         private IPersonService _personService;
 
-        public PersonController(IPersonModelFactory personModelFactory, IMapper mapper, IPersonService personService)
+        public PersonController(IPersonModelFactory personModelFactory, IMapper mapper, IPersonService personService, IPictureModelFactory pictureModelFactory)
         {
             _personModelFactory = personModelFactory;
             _mapper = mapper;
             _personService = personService;
+            _pictureModelFactory = pictureModelFactory;
         }
 
         // GET: PersonController/List/n
         public ActionResult List(int pageNumber, string searchString)
         {
             ViewData["CurrentFilter"] = searchString;
-            var persons = _personModelFactory.PreparePersonListModel(pageNumber, searchString);           
+            var persons = _personModelFactory.PreparePersonListModel(pageNumber, searchString);
             return View(persons);
         }
 
@@ -53,6 +54,7 @@ namespace NaturalPersonReference.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(PersonModel model)
         {
+            _pictureModelFactory.PreparePictureModel(model.Picture);
             var person = _mapper.Map<Person>(model);
             var personAdded = _personService.CreatePerson(person);
             return RedirectToAction(nameof(Details), new { model.Id });

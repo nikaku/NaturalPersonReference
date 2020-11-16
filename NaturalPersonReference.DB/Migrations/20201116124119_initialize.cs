@@ -13,12 +13,39 @@ namespace NaturalPersonReference.DB.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CityName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Region = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    CityName = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Cities", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Languages",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Languages", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "LocaleResources",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    LanguageId = table.Column<int>(type: "int", nullable: false),
+                    ResourceName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ResourceValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LocaleResources", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -46,8 +73,8 @@ namespace NaturalPersonReference.DB.Migrations
                     Gender = table.Column<int>(type: "int", nullable: false),
                     Tin = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     BirthDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CityId = table.Column<int>(type: "int", nullable: true),
-                    PhoneNumberId = table.Column<int>(type: "int", nullable: true),
+                    CityId = table.Column<int>(type: "int", nullable: false),
+                    PhoneId = table.Column<int>(type: "int", nullable: false),
                     PicturePath = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -58,13 +85,13 @@ namespace NaturalPersonReference.DB.Migrations
                         column: x => x.CityId,
                         principalTable: "Cities",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Persons_Phones_PhoneNumberId",
-                        column: x => x.PhoneNumberId,
+                        name: "FK_Persons_Phones_PhoneId",
+                        column: x => x.PhoneId,
                         principalTable: "Phones",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -73,7 +100,7 @@ namespace NaturalPersonReference.DB.Migrations
                 {
                     PersonId = table.Column<int>(type: "int", nullable: false),
                     RelatedPersonId = table.Column<int>(type: "int", nullable: false),
-                    PersonId1 = table.Column<int>(type: "int", nullable: true)
+                    ConnectionType = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -84,17 +111,10 @@ namespace NaturalPersonReference.DB.Migrations
                         principalTable: "Persons",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_RelatedPersons_Persons_PersonId1",
-                        column: x => x.PersonId1,
-                        principalTable: "Persons",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
                         name: "FK_RelatedPersons_Persons_RelatedPersonId",
                         column: x => x.RelatedPersonId,
                         principalTable: "Persons",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
@@ -103,14 +123,9 @@ namespace NaturalPersonReference.DB.Migrations
                 column: "CityId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Persons_PhoneNumberId",
+                name: "IX_Persons_PhoneId",
                 table: "Persons",
-                column: "PhoneNumberId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_RelatedPersons_PersonId1",
-                table: "RelatedPersons",
-                column: "PersonId1");
+                column: "PhoneId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_RelatedPersons_RelatedPersonId",
@@ -120,6 +135,12 @@ namespace NaturalPersonReference.DB.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Languages");
+
+            migrationBuilder.DropTable(
+                name: "LocaleResources");
+
             migrationBuilder.DropTable(
                 name: "RelatedPersons");
 

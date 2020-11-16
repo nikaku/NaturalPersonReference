@@ -19,5 +19,6 @@ namespace NaturalPersonReference.BL.Entities
         public int PhoneId { get; set; }
         public string PicturePath { get; set; }
         public virtual ICollection<RelatedPersons> RelatedPersons { get; set; }
+        public virtual ICollection<RelatedPersons> RelatedPersonsFrom { get; set; }
     }
 }

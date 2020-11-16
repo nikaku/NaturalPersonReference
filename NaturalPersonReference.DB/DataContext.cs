@@ -20,6 +20,7 @@ namespace NaturalPersonReference.DB
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new RelatedPersonConfiguration());
+            modelBuilder.ApplyConfiguration(new PersonConfiguration());
         }
     }
 }

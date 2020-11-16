@@ -26,9 +26,26 @@ namespace NaturalPersonReference.Services.Persons
             var prerson = _unitOfwork.PersonRepository.Get(id);
             if (prerson != null)
             {
+                foreach (var relatedPerson in prerson.RelatedPersons)
+                {
+                    _unitOfwork.RelatedPersonsRepository.Remove(relatedPerson);
+                }
+
                 _unitOfwork.PersonRepository.Remove(prerson);
                 _unitOfwork.SaveChanges();
             }
+        }
+
+        public void DeleteRelatedPerson(int id, IEnumerable<int> ids)
+        {
+            var relatedPrerson = _unitOfwork.RelatedPersonsRepository.FindAll(x => ids.Contains(x.RelatedPersonId));
+
+            foreach (var relatedPerson in relatedPrerson)
+            {
+                _unitOfwork.RelatedPersonsRepository.Remove(relatedPerson);
+            }
+
+            _unitOfwork.SaveChanges();
         }
 
         public Person Get(int id)

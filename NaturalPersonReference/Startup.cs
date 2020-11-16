@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using NaturalPersonReference.ActionFilters;
 using NaturalPersonReference.BL.Interfaces;
 using NaturalPersonReference.DB;
 using NaturalPersonReference.DB.Implementations;
@@ -33,7 +34,7 @@ namespace NaturalPersonReference
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews().AddFluentValidation();
+            services.AddControllersWithViews(opt=>opt.Filters.Add(typeof(PersonActionFilter))).AddFluentValidation();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IPersonModelFactory, PersonModelFactory>();
             services.AddScoped<ICityModelFactory, CityModelFactory>();
@@ -42,6 +43,7 @@ namespace NaturalPersonReference
             services.AddTransient<IValidator<PersonModel>, PersonValidator>();
             services.AddTransient<IValidator<PhoneModel>, PhoneValidator>();
             services.AddScoped<ILocalizationService, LocalizationService>();
+            services.AddScoped<IPictureModelFactory, PictureModelFactory>();
 
             IConfigurationSection appSettingsSection = Configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettingsSection);

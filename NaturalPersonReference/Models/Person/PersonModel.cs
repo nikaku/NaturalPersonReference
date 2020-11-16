@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using NaturalPersonReference.BL.Entities;
 using NaturalPersonReference.BL.Enums;
 using System;
@@ -32,6 +33,6 @@ namespace NaturalPersonReference.Models.Person
         public ConnectionType ConnectionType { get; set; }
         public PhoneModel Phone { get; set; }
         public int PhoneId { get; set; }
-        public string PicturePath { get; set; }
+        public PictureModel Picture { get; set; }
     }
 }

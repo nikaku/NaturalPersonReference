@@ -13,11 +13,12 @@ namespace NaturalPersonReference.MapperProfiles
         public PersonProfile()
         {
             CreateMap<PersonModel, Person>()
+                .ForMember(des=>des.PicturePath, opts=>opts.MapFrom(src=>src.Picture.PicurePath))
                 .ForMember(des => des.RelatedPersons, opts => opts
                   .MapFrom(src => src.SelectedPersons.Select(id =>
                    new RelatedPersons
                    {
-                       PersonId = id,
+                       RelatedPersonId = id,
                        ConnectionType = src.ConnectionType
                    }
                       )));

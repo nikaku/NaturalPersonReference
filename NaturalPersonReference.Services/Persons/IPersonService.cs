@@ -9,6 +9,7 @@ namespace NaturalPersonReference.Services.Persons
     {
         Person CreatePerson(Person person);
         void DeletePerson(int id);
+        void DeleteRelatedPerson(int id, IEnumerable<int> ids);
         void UpdatePerson(Person person);
         Person Get(int id);
         IEnumerable<Person> GetAll();

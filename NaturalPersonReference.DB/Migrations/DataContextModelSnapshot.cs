@@ -168,15 +168,15 @@ namespace NaturalPersonReference.DB.Migrations
             modelBuilder.Entity("NaturalPersonReference.BL.Entities.RelatedPersons", b =>
                 {
                     b.HasOne("NaturalPersonReference.BL.Entities.Person", "Person")
-                        .WithMany()
+                        .WithMany("RelatedPersons")
                         .HasForeignKey("PersonId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("NaturalPersonReference.BL.Entities.Person", "RelatedPerson")
-                        .WithMany("RelatedPersons")
+                        .WithMany("RelatedPersonsFrom")
                         .HasForeignKey("RelatedPersonId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Person");
@@ -187,6 +187,8 @@ namespace NaturalPersonReference.DB.Migrations
             modelBuilder.Entity("NaturalPersonReference.BL.Entities.Person", b =>
                 {
                     b.Navigation("RelatedPersons");
+
+                    b.Navigation("RelatedPersonsFrom");
                 });
 #pragma warning restore 612, 618
         }

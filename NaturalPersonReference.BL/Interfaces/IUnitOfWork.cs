@@ -9,6 +9,7 @@ namespace NaturalPersonReference.BL.Interfaces
         IPhoneRepository PhoneRepository { get; }
         ILanguageRepository LanguageRepository { get; }
         ILocaleResourceRepository LocaleResourceRepository { get; }
+        IRelatedPersonsRepository RelatedPersonsRepository { get; }
 
         void SaveChanges();
         void Dispose();

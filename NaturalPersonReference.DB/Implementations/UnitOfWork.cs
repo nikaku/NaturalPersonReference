@@ -16,6 +16,7 @@ namespace NaturalPersonReference.DB
             PhoneRepository = new PhoneRepository(dataContext);
             LanguageRepository = new LanuageRepository(dataContext);
             LocaleResourceRepository = new LocaleResourceRepository(dataContext);
+            RelatedPersonsRepository = new RelatedPersonsRepository(dataContext);
         }
 
         public IPersonRepository PersonRepository { get; }
@@ -23,6 +24,7 @@ namespace NaturalPersonReference.DB
         public IPhoneRepository PhoneRepository { get; }
         public ILocaleResourceRepository LocaleResourceRepository { get; }
         public ILanguageRepository LanguageRepository { get; }
+        public IRelatedPersonsRepository RelatedPersonsRepository { get; }
 
         public void Dispose()
         {

@@ -13,7 +13,7 @@ namespace NaturalPersonReference.DB.Implementations.Repositories
 
         public new Person Get(int id)
         {
-            return PersonContext.Persons.Include(c => c.City).Include(p => p.Phone).FirstOrDefault(x => x.Id == id);
+            return PersonContext.Persons.Include(c => c.City).Include(p => p.Phone).Include(x=>x.RelatedPersons).FirstOrDefault(x => x.Id == id);
         }
 
         private DataContext PersonContext => Context as DataContext;
