@@ -117,6 +117,79 @@ namespace NaturalPersonReference.DB.Migrations
                         principalColumn: "Id");
                 });
 
+            migrationBuilder.InsertData(
+                table: "Cities",
+                columns: new[] { "Id", "CityName" },
+                values: new object[,]
+                {
+                    { 1, "Tbilisi" },
+                    { 2, "Kutaisi" },
+                    { 3, "Batumi" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Languages",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { 1, "GEO" },
+                    { 2, "ENG" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "LocaleResources",
+                columns: new[] { "Id", "LanguageId", "ResourceName", "ResourceValue" },
+                values: new object[,]
+                {
+                    { 1, 1, "FirstName.Error", "არავალლიდური სახელი" },
+                    { 2, 2, "FirstName.Error", "First Name is not valid" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Phones",
+                columns: new[] { "Id", "PhoneNumber", "Type" },
+                values: new object[,]
+                {
+                    { 1, "551551551", 1 },
+                    { 2, "551551552", 0 },
+                    { 3, "551551553", 0 },
+                    { 4, "551551554", 1 },
+                    { 5, "551551555", 0 },
+                    { 6, "551551544", 2 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Persons",
+                columns: new[] { "Id", "BirthDate", "CityId", "FirstName", "Gender", "LastName", "PhoneId", "PicturePath", "Tin" },
+                values: new object[,]
+                {
+                    { 1, new DateTime(1995, 3, 3, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, "Nika", 1, "Kurdadze", 1, null, "57001057458" },
+                    { 4, new DateTime(1994, 3, 3, 0, 0, 0, 0, DateTimeKind.Unspecified), 3, "Giga", 1, "Grigalashvili", 1, null, "57001057428" },
+                    { 2, new DateTime(1994, 3, 3, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, "Vazha", 1, "Jambazishvili", 2, null, "57001057451" },
+                    { 3, new DateTime(1994, 3, 3, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, "Beka", 0, "Latsabidze", 3, null, "57001057458" },
+                    { 5, new DateTime(1994, 3, 3, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, "Zura", 1, "Adghuladze", 4, null, "77701052458" },
+                    { 6, new DateTime(1994, 3, 3, 0, 0, 0, 0, DateTimeKind.Unspecified), 3, "Goderdzi", 1, "Lominashvili", 5, null, "57001057451" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "RelatedPersons",
+                columns: new[] { "PersonId", "RelatedPersonId", "ConnectionType" },
+                values: new object[,]
+                {
+                    { 1, 4, 1 },
+                    { 1, 2, 1 },
+                    { 2, 4, 1 },
+                    { 1, 3, 1 },
+                    { 3, 2, 1 },
+                    { 3, 4, 2 },
+                    { 4, 5, 0 },
+                    { 5, 2, 2 },
+                    { 1, 5, 1 },
+                    { 3, 5, 1 },
+                    { 3, 6, 1 },
+                    { 1, 6, 3 }
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Persons_CityId",
                 table: "Persons",
