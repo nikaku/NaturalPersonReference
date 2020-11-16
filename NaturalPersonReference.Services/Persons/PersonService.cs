@@ -24,9 +24,10 @@ namespace NaturalPersonReference.Services.Persons
         public void DeletePerson(int id)
         {
             var prerson = _unitOfwork.PersonRepository.Get(id);
+            var relatedTo = _unitOfwork.RelatedPersonsRepository.FindAll(x => x.PersonId == id || x.RelatedPersonId == id);             
             if (prerson != null)
             {
-                foreach (var relatedPerson in prerson.RelatedPersons)
+                foreach (var relatedPerson in relatedTo)
                 {
                     _unitOfwork.RelatedPersonsRepository.Remove(relatedPerson);
                 }
